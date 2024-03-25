@@ -12,7 +12,19 @@ jobs:
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@v3
-    - uses: ncipollo/release-action@v1
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Generate changelog
+      uses: Bullrich/generate-release-changelog@master
+      id: Changelog
+      env:
+        REPO: ${{ github.repository }}
+
+    - name: Generate Release
+      uses: ncipollo/release-action@v1
       with:
         artifacts: "release.tar.gz,foo/*.txt"
+        body: |
+          Changes in this Release
+          ${{ steps.Changelog.outputs.changelog }}
