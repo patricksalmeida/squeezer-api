@@ -1,1 +1,1 @@
-# Squeeze
+# squeezer-api
